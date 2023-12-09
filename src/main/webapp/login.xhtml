@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <h:outputStylesheet library="css" name="styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</h:head>
+
+<h:body>
+    <h:form>
+        <p:growl id="growl" />
+
+        <p:panel header="Inicio de sesión" styleClass="ui-panel">
+            <p:graphicImage name="imgs/usuario.png" width="30%" styleClass="user-image" />
+
+            <h:panelGrid columns="2" styleClass="form-grid">
+                <h:outputLabel value="Correo:" for="usuario" styleClass="label-text" />
+                <h:inputText id="usuario" value="#{usuario.correo}" required="true" requiredMessage="El correo es requerido"
+                             styleClass="input-field" />
+
+                <h:outputLabel value="Contraseña:" for="contrasena" styleClass="label-text" />
+                <h:inputSecret id="contrasena" value="#{usuario.contraseña}" required="true" requiredMessage="La contraseña es requerida"
+                               styleClass="input-field" />
+
+                <h:panelGroup layout="block" styleClass="center-button">
+                    <p:commandButton value="Iniciar Sesión" action="#{usuario.validadUsuario}" update="growl" styleClass="boton" />
+                </h:panelGroup>
+            </h:panelGrid>
+        </p:panel>
+    </h:form>
+</h:body>
+
+</html>
