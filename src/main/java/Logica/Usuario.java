@@ -42,12 +42,16 @@ public class Usuario implements Serializable {
 			if (correo.equals(usuario1.getCorreo()) && contraseña.equals(usuario1.getContraseña())) {
 				System.out.println(correo + " entro");
 				if (usuario1.getRol().equals("profesor")) {
-					this.redireccionar("darhsbord.xhtml");
+					this.redireccionar("dashboard.xhtml");
 				}
 			}
 		}
 
 	}
+	
+	
+
+
 
 	/**
 	 * @return the nombre
@@ -83,6 +87,8 @@ public class Usuario implements Serializable {
 	public List<Grupo> getGrupo() {
 		return grupo;
 	}
+	
+	
 
 	/**
 	 * @param nombre the nombre to set

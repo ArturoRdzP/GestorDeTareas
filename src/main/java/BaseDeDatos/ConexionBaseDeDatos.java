@@ -8,13 +8,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Logica.Asignacion;
 import Logica.Usuario;
 
 public class ConexionBaseDeDatos {
 	// Información de la base de datos
-	private static final String URL = "jdbc:mysql://edutaskmanager.cgi6egpm9ayl.us-west-1.rds.amazonaws.com:3306/EduTaskManager?serverTimezone=UTC";
-	private static final String USUARIO = "admin";
-	private static final String CONTRASEÑA = "Limoncillos";
+//	private static final String URL = "jdbc:mysql://edutaskmanager.cgi6egpm9ayl.us-west-1.rds.amazonaws.com:3306/EduTaskManager?serverTimezone=UTC";
+//	private static final String USUARIO = "admin";
+//	private static final String CONTRASEÑA = "Limoncillos";
+	
+	private static final String URL = "jdbc:mysql://localhost:3306/tareas2";
+	private static final String USUARIO = "root";
+	private static final String CONTRASEÑA = "ArturoRdz1*";
 
 	private ConexionBaseDeDatos() {
 	}
@@ -31,7 +36,7 @@ public class ConexionBaseDeDatos {
 
 	public static void insertarUsuario(Usuario usuario) {
 		try (Connection conexion = DriverManager.getConnection(URL, USUARIO, CONTRASEÑA)) {
-			String query = "INSERT INTO usuario (id, nombre, correo, rol, contraseña) VALUES (?, ?, ?, ?, ?)";
+			String query = "INSERT INTO usuario (clave_usuario, rol, correo, contrasenia) VALUES (?, ?, ?, ?, ?)";
 			try (PreparedStatement preparedStatement = conexion.prepareStatement(query)) {
 				preparedStatement.setString(2, usuario.getNombre());
 				preparedStatement.setString(3, usuario.getCorreo());
@@ -57,8 +62,9 @@ public class ConexionBaseDeDatos {
 					String rol = resultSet.getString("rol");
 					String contraseña = resultSet.getString("contraseña");
 					
-					Usuario usuario = new Usuario(nombre, correo, rol, contraseña);
-					usuarios.add(usuario);
+				Usuario usuario = new Usuario(nombre, correo, rol, contraseña);
+				usuarios.add(usuario);
+				
 				}
 			}
 		} catch (SQLException e) {
@@ -66,4 +72,6 @@ public class ConexionBaseDeDatos {
 		}
 		return usuarios;
 	}
+	
+	
 }
