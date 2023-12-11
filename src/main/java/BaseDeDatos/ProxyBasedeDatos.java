@@ -18,6 +18,7 @@ public class ProxyBasedeDatos {
 		}
 		return usuarioProxy;				
 	}
+	
 	public static   List<Usuario> metoRealConsultaUsuario()
 	{
 		try {

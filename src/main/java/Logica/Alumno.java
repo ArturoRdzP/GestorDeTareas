@@ -1,25 +1,21 @@
 package Logica;
 
-public class Alumno extends Usuario{
-	
-	private String clave_alumno;
+public class Alumno extends Usuario {
+
+	private String no_control;
 	private Actividad actividad;
-	
-	
-	
-	
-	
-	public Alumno(String clave_alumno, String nombre, String clave_usuario, String correo, String rol, String contraseña) {
-		super(clave_usuario, nombre, correo, rol, contraseña);
-		this.clave_alumno = clave_alumno;
+
+	public Alumno(String no_control, String nombre, String correo, String rol, String contraseña, String imagen) {
+		super(nombre, correo, rol, contraseña, imagen);
+		this.no_control = no_control;
 	}
+
 	public void mostrarAsignaciones() {
-		
-		
-		
+
 	}
+
 	public void enviarActividad(Actividad actividad) {
-		
+
 	}
-	
+
 }

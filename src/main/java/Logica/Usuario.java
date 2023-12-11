@@ -23,14 +23,16 @@ public class Usuario implements Serializable {
 	private String contraseña;
 	private String rol;
 	private String correo;
+        private String imagen;
 	private List<Grupo> grupo = new ArrayList<Grupo>();
 	private List<Usuario> usuario = new ArrayList<Usuario>();
 
-	public Usuario(String nombre, String correo, String rol, String contraseña) {
+	public Usuario(String nombre, String correo, String rol, String contraseña, String imagen) {
 		this.nombre = nombre;
 		this.correo = correo;
 		this.rol = rol;
 		this.contraseña = contraseña;
+                this.imagen = imagen;
 	}
 
 	public Usuario() {
