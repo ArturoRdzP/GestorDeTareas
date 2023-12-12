@@ -7,43 +7,33 @@
 
 <h:head>
 	<title>Dashboard</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=2" />
 	<h:outputStylesheet library="css" name="menu.css" />
 	<link rel="stylesheet" type="text/css" href="primeicons/primeicons.css" />
-
+	<link rel="stylesheet" type="text/css" href="path/to/styles.css" />
 </h:head>
 
 <h:body>
 	<div class="header">
 		<h1>Bienvenidos al sistema de tareas</h1>
 		<div class="header-icons">
-			<p:commandButton id="basic2" type="button" icon="pi pi-bell"
-				styleClass="no-background" />
-			<p:overlayPanel for="basic2" style="width:350px">
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-					do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-					enim ad minim veniam, quis nostrud exercitation ullamco laboris
-					nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-					reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-					pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-					culpa qui officia deserunt mollit anim id est laborum.</p>
-			</p:overlayPanel>
+
 
 			<p:commandButton id="basic" type="button" icon="pi pi-user"
 				styleClass="no-background" />
 			<p:overlayPanel for="basic" style="width:350px">
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-					do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-					enim ad minim veniam, quis nostrud exercitation ullamco laboris
-					nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-					reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-					pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-					culpa qui officia deserunt mollit anim id est laborum.</p>
+				<p>Nombre: #{vistaProfesores.nombreUsuario}</p>
+
+				<p>Correo: #{vistaProfesores.correo}</p>
+				<p>IDusuario:#{vistaProfesores.claveUsuari}</p>
+				<p:commandButton value="Cerrar Sesión"
+					action="#{usuario.cerrarSesion}" styleClass="boton" />
+
 			</p:overlayPanel>
 		</div>
 	</div>
 
-	<div class="content" style="contenedor">
+	<div class="content" style="">
 		<h:form
 			style="display: flex; flex-direction: row; flex: 1; height: 100%; width:80%">
 			<div class="card">
@@ -51,68 +41,71 @@
 					<p:menuitem value="Home" outcome="darhsbord.xhtml"></p:menuitem>
 					<p:menuitem value="Calendario" outcome="Calendario.xhtml"></p:menuitem>
 					<p:submenu label="Cursos">
-						<c:forEach var="grupo" items="#{profesor.grupos}">
-							<p:menuitem value="#{grupo.clave}" icon="pi pi-folder">
-								<!-- Agrega aquí los detalles específicos de cada grupo -->
-								<f:param name="grupoClave" value="#{grupo.clave}" />
+						<c:forEach var="grupo" items="#{vistaProfesores.lista}">
+							<p:menuitem value="#{grupo.claveGrupo}" icon="pi pi-folder"
+								outcome="grupo.xhtml">
+								<f:param name="grupoClave" value="#{grupo.claveGrupo}" />
+								<p>#{grupo.claveGrupo}</p>
 							</p:menuitem>
 						</c:forEach>
 					</p:submenu>
+
 				</p:menu>
 			</div>
 
-			<div id="content" style="overflow-x: auto;">
-				<div class="product card">
-    <h:form id="form">
-        <p:dataView var="product" value="#{profesor.grupos}" rows="12" paginator="true"
-                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                    gridIcon="pi pi-th-large" listIcon="pi pi-bars"
-                    layout="grid" gridRowStyleClass="lg:col-6 xl:col-4" flex="true">
+			<div id="content" style="width: 100vw; high: 100vw;">
 
-            <p:dataViewGridItem>
-                <div class="product-grid-item card border-1">
-                    <div class="product-grid-item-top">
-                        <div>
-                            <i class="pi pi-tag product-category-icon"/>
-                            <span class="product-category">#{product.clave}</span>
-                        </div>
-                        <span class="product-badge ">Profesor:	#{profesor.nombre}</span>
-                    </div>
-                    <div class="product-grid-item-content">
-                        <p:graphicImage  library="demo"/>
-                        <div class="product-name">#{product.profesor}</div>
-                        <div class="product-description">#{product.materia}</div>
-                        <p:rating readonly="true" value="#{alumno.nombre}"/>
-                    </div>
-                    <div class="product-grid-item-bottom">
-                        <h:outputText  styleClass="product-price">
-                            <f:convertNumber currencySymbol="$" type="currency"/>
-                        </h:outputText>
-                        
-                    </div>
-                </div>
-            </p:dataViewGridItem>
 
-            <p:dataViewListItem>
-                <div class="product-list-item">
-                    <p:graphicImage />
-                    <div class="product-list-detail">
-                        <div class="product-name">#{product.clave}</div>
-                        <div class="product-description">Profesor: #{profesor.nombre}</div>
-                        <p:rating readonly="true" value="#{product.materia}"/>
-                        <i class="pi pi-tag product-category-icon"/><span
-                            class="product-category">#{alumno.nombre}</span>
-                    </div>
-                    
-                </div>
-            </p:dataViewListItem>
-        </p:dataView>
+				<div class="card product">
+					<h:form id="form">
+						<p:dataView var="product" value="#{vistaProfesores.lista}"
+							rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+                    {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							gridIcon="pi pi-th-large" listIcon="pi pi-bars">
 
-    </h:form>
-</div>
+							<p:dataViewGridItem>
+								<div class="product-grid-item card border-1">
+									<div class="product-grid-item-top">
+										<div>
+											<i class="pi pi-tag product-category-icon" /> <span
+												class="product-category">#{product.claveGrupo}</span> <span
+												class="product-category">#{product.claveMateria}</span> <span
+												class="product-category">#{product.nombreMateria}</span>
+										</div>
+										<span
+											class="product-badge status-#{product.nombre().toLowerCase()}">#{product.nombreMateria}</span>
+									</div>
+									<div class="product-grid-item-content">
+										<p:graphicImage name="#{product.img}" library="demo"
+											fallback="imgs/usuario.png" />
+
+
+									</div>
+									<div class="product-grid-item-bottom"></div>
+								</div>
+							</p:dataViewGridItem>
+
+							<p:dataViewListItem>
+								<div class="product-list-item">
+									<p:graphicImage name="imgs/portada.jpeg" width="10%" />
+									<div class="product-list-detail">
+										<div class="product-name">#{product.claveMateria}</div>
+										<div class="product-name">#{product.nombreMateria}</div>
+										<div class="product-name">#{product.claveGrupo}</div>
+									</div>
+									<div class="product-list-action"></div>
+								</div>
+							</p:dataViewListItem>
+						</p:dataView>
+					</h:form>
+				</div>
+
+
+
 			</div>
 		</h:form>
 	</div>
-	
+
 </h:body>
 </html>

@@ -1,17 +1,23 @@
 package Logica;
 
-public class Alumno extends Usuario{
-	public Alumno(String clave_usuario2, String nombre2, String correo2, String rol2, String contraseña2) {
-		super(clave_usuario2, nombre2, correo2, rol2, contraseña2);
-		// TODO Auto-generated constructor stub
+import BaseDeDatos.ConexionBaseDeDatos;
+
+public class Alumno extends Usuario {
+
+	private String no_control;
+	private Actividad actividad;
+
+	public Alumno(String no_control, String nombre, String correo, String rol, String contraseña, String imagen) {
+		super(nombre, correo, rol, contraseña, imagen);
+		this.no_control = no_control;
 	}
-	private Actividad activiad;
-	
+
 	public void mostrarAsignaciones() {
-		
+		ConexionBaseDeDatos.mostrarAsignaciones(Alumno.this.no_control);
 	}
+
 	public void enviarActividad(Actividad actividad) {
-		
+
 	}
-	
+
 }

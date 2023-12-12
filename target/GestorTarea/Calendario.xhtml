@@ -10,6 +10,7 @@
 <h:head>
 	<title>Calendario</title>
 	<h:outputStylesheet library="css" name="menu.css" />
+	<meta name="viewport" content="width=device-width, initial-scale=5" />
 	<link rel="stylesheet" type="text/css" href="primeicons/primeicons.css" />
 	<style>
 /* Agrega estilos personalizados aquí */
@@ -31,28 +32,16 @@
 	<div class="header">
 		<h1>Calendario de actividades</h1>
 		<div class="header-icons">
-			<p:commandButton id="basic2" type="button" icon="pi pi-bell"
-				styleClass="no-background" />
-			<p:overlayPanel for="basic2" style="width:350px">
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-					do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-					enim ad minim veniam, quis nostrud exercitation ullamco laboris
-					nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-					reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-					pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-					culpa qui officia deserunt mollit anim id est laborum.</p>
-			</p:overlayPanel>
+
 
 			<p:commandButton id="basic" type="button" icon="pi pi-user"
 				styleClass="no-background" />
 			<p:overlayPanel for="basic" style="width:350px">
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-					do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-					enim ad minim veniam, quis nostrud exercitation ullamco laboris
-					nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-					reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-					pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-					culpa qui officia deserunt mollit anim id est laborum.</p>
+				<p>Nombre: #{vistaProfesores.nombreUsuario}</p>
+
+				<p>Correo: #{vistaProfesores.correo}</p>
+				<p>IDusuario:#{vistaProfesores.claveUsuari}</p>
+
 			</p:overlayPanel>
 		</div>
 
@@ -62,24 +51,27 @@
 		<h:form
 			style="display: flex; flex-direction: row; flex: 1; height: 200%;">
 			<div class="card">
-				 <p:menu toggleable="true"  style="height: 200%;">
-            <p:menuitem value="Home"  outcome="darhsbord.xhtml"> </p:menuitem>
-            <p:menuitem value="Calendario"  outcome="Calendario.xhtml"> </p:menuitem>
-            <p:submenu label="Cursos">
-        <c:forEach var="g" items="#{usuario.grupos}">
-            <p:menuitem value="#{g.clave}" icon="pi pi-folder">
-                <!-- Agrega aquí los detalles específicos de cada grupo -->
-                <f:param name="grupoClave" value="#{g.clave}" />
-            </p:menuitem>
-        </c:forEach>
-    </p:submenu>
-           </p:menu>
+				<p:menu toggleable="true" style="height: 200%;">
+					<p:menuitem value="Home" outcome="darhsbord.xhtml"></p:menuitem>
+					<p:menuitem value="Calendario" outcome="Calendario.xhtml"></p:menuitem>
+					<p:submenu label="Cursos">
+						<c:forEach var="grupo" items="#{vistaProfesores.lista}">
+							<p:menuitem value="#{grupo.claveGrupo}" icon="pi pi-folder"
+								outcome="grupo.xhtml">
+								<f:param name="grupoClave" value="#{grupo.claveGrupo}" />
+								<p>#{grupo.claveGrupo}</p>
+							</p:menuitem>
+						</c:forEach>
+					</p:submenu>
+
+				</p:menu>
 			</div>
 
 			<div id="content">
 				<p:commandButton value="Preparar Nueva Actividad"
 					actionListener="#{calendarBean.prepararNuevaActividad}"
 					update="activityDialog" oncomplete="PF('activityDialog').show()" />
+
 				<p:schedule value="#{calendarBean.eventModel}"
 					widgetVar="scheduleWidget" />
 

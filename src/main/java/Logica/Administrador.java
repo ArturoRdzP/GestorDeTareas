@@ -2,15 +2,12 @@ package Logica;
 
 import java.util.ArrayList;
 
+import BaseDeDatos.ConexionBaseDeDatos;
+
 public class Administrador extends Usuario{
 	
-	
-	public Administrador(String clave_usuario2, String nombre2, String correo2, String rol2, String contraseña2) {
-		super(clave_usuario2, nombre2, correo2, rol2, contraseña2);
-		// TODO Auto-generated constructor stub
-	}
 	public void agregarUsuario(Usuario usuario) {
-		
+		ConexionBaseDeDatos.insertarUsuario(usuario);
 	}
 	public void eliminarUsuario(Usuario usuario) {
 		

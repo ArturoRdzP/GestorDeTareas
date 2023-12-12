@@ -1,13 +1,9 @@
 package Logica;
 
-import java.util.Date;
-
 public class AgregarActividadPractica implements AgregarActividad{
 
-	@Override
-	public void crearActividad(int id, String titulo, String Descripcion, Date fechaVencimiento) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void crearActividad(String titulo, String descripcion, EstadoActividad estado, String documento) {
+    }
 
 }

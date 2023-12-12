@@ -4,6 +4,6 @@ import java.util.Date;
 
 public interface AgregarActividad {
 	
-	public void crearActividad(int id, String titulo, String Descripcion, Date fechaVencimiento);
+	public void crearActividad(String titulo, String descripcion, EstadoActividad estado, String documento);
 	
 }

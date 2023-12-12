@@ -11,7 +11,6 @@ interfaces\Sujeto.class
 Logica\AgregarCriterioCuestionario.class
 Logica\Grupo.class
 Logica\Administrador.class
-BaseDeDatos\ConexionBaseDeDatos$1.class
 Logica\AgregarCriterio.class
 Logica\LoginFilter.class
 AccionesprimeFaces\CalendarBean.class
