@@ -9,10 +9,9 @@ public class Materia {
     private String nombre;
     private int unidades;
     
-    public Materia(String clave, String nombre, int unidades) {
+    public Materia(String clave, String nombre) {
         this.clave = clave;
         this.nombre = nombre;
-        this.unidades = unidades;
     }
     
     public void agregarMateria(Materia materia, Administrador administrador) {

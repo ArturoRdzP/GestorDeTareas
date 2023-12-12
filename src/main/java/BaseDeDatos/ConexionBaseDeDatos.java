@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import org.primefaces.model.diagram.Connection;
 
 import AccionesprimeFaces.CalendarBean;
@@ -330,6 +332,104 @@ public class ConexionBaseDeDatos {
 
 	    return resultados;
 	}
+	
+	public static void insertarUsuario(Usuario usuario) {
+        try (java.sql.Connection conexion = DriverManager.getConnection(URL, USUARIO, CONTRASEÑA)) {
+            String query = "INSERT INTO usuario (nombre, correo, rol, contraseña) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement preparedStatement = conexion.prepareStatement(query)) {
+                preparedStatement.setString(1, usuario.getNombre());
+                preparedStatement.setString(2, usuario.getCorreo());
+                preparedStatement.setString(3, usuario.getRol());
+                preparedStatement.setString(4, usuario.getContraseña());
+                preparedStatement.executeUpdate();
+
+                System.out.println("Datos insertados en la tabla Usuario");
+
+                if (usuario.getRol().equals("profesor")) {
+                    String num_p = JOptionPane.showInputDialog("Ingrese el numero de profesor");
+                    String query2 = "INSERT INTO profesor (id_usuario, no_profesor) VALUES (LAST_INSERT_ID(), ?);";
+                    PreparedStatement preparedStatement2 = conexion.prepareStatement(query2);
+                    preparedStatement2.setString(1, num_p);
+                    preparedStatement2.executeUpdate();
+                    System.out.println("Datos insertados en la tabla profesor");
+                }
+                if (usuario.getRol().equals("alumno")) {
+                    String num_c = JOptionPane.showInputDialog("Ingrese el numero de control");
+                    String query2 = "INSERT INTO alumno (id_usuario, numero_control) VALUES (LAST_INSERT_ID(), ?);";
+                    PreparedStatement preparedStatement2 = conexion.prepareStatement(query2);
+                    preparedStatement2.setString(1, num_c);
+                    preparedStatement2.executeUpdate();
+                    System.out.println("Datos insertados en la tabla alumno");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+	public static List<Asignacion> mostrarAsignaciones(String id_usuario) {
+        List<Asignacion> asignaciones = new ArrayList<>();
+        try (java.sql.Connection conexion = DriverManager.getConnection(URL, USUARIO, CONTRASEÑA)) {
+            String query = "SELECT asignacion.* FROM asignacion JOIN alumno_asignacion ON asignacion.id = alumno_asignacion.asignacion_id WHERE alumno_asignacion.alumno_id = ?";
+            try (PreparedStatement preparedStatement = conexion.prepareStatement(query)) {
+                // Agregar el valor del ID del alumno
+                preparedStatement.setString(1, id_usuario);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        String titulo = resultSet.getString("titulo");
+                        String descripcion = resultSet.getString("descripcion");
+                        String estado = resultSet.getString("estado");
+                        String grupoID = resultSet.getString("grupo_id");
+                        String actividadID = resultSet.getString("actividad_id");
+                        String calificacion = resultSet.getString("calificacion");
+                        Date fechaCreacion = resultSet.getDate("fecha_creacion");
+                        Date fechaVencimiento = resultSet.getDate("fecha_vencimiento");
+
+                        Asignacion asignacion = new Asignacion(titulo, descripcion, estado, grupoID, actividadID, calificacion, fechaCreacion, fechaVencimiento);
+                        asignaciones.add(asignacion);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return asignaciones;
+    }
+	
+	public static void crearMateria(Materia materia) {
+        try (java.sql.Connection conexion = DriverManager.getConnection(URL, USUARIO, CONTRASEÑA)) {
+            String query = "INSERT INTO materia (clave, nombre, unidades) VALUES (?, ?, ?)";
+            try (PreparedStatement preparedStatement = conexion.prepareStatement(query)) {
+                preparedStatement.setString(1, materia.getClave());
+                preparedStatement.setString(2, materia.getNombre());
+                preparedStatement.setInt(3, materia.getUnidades());
+                preparedStatement.executeUpdate();
+
+                System.out.println("Datos insertados en la tabla Materia");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void eliminarMateria(Materia materia) {
+        try (java.sql.Connection conexion = DriverManager.getConnection(URL, USUARIO, CONTRASEÑA)) {
+            String query = "DELETE FROM materia WHERE clave = ?";
+            try (PreparedStatement preparedStatement = conexion.prepareStatement(query)) {
+                preparedStatement.setString(1, materia.getClave());
+                int filasAfectadas = preparedStatement.executeUpdate();
+
+                if (filasAfectadas > 0) {
+                    System.out.println("Materia eliminada con clave: " + materia.getClave());
+                } else {
+                    System.out.println("No se encontró ninguna materia con la clave: " + materia.getClave());
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+	
 
 	
 }
