@@ -1,0 +1,126 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+
+<h:head>
+	<title>Calendario</title>
+	<h:outputStylesheet library="css" name="menu.css" />
+	<link rel="stylesheet" type="text/css" href="primeicons/primeicons.css" />
+	<style>
+/* Agrega estilos personalizados aquí */
+#content {
+	width: 70%; /* Ajusta el ancho del calendario según tus necesidades */
+	margin: auto auto; /* Centra el contenido */
+	height: 80%;
+}
+
+.ui-schedule {
+	width: 100%;
+	height: 50%;
+	/* Ajusta el ancho del calendario al 100% del contenedor */
+}
+</style>
+</h:head>
+
+<h:body>
+	<div class="header">
+		<h1>Calendario de actividades</h1>
+		<div class="header-icons">
+			<p:commandButton id="basic2" type="button" icon="pi pi-bell"
+				styleClass="no-background" />
+			<p:overlayPanel for="basic2" style="width:350px">
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+					do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+					enim ad minim veniam, quis nostrud exercitation ullamco laboris
+					nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+					reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+					pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+					culpa qui officia deserunt mollit anim id est laborum.</p>
+			</p:overlayPanel>
+
+			<p:commandButton id="basic" type="button" icon="pi pi-user"
+				styleClass="no-background" />
+			<p:overlayPanel for="basic" style="width:350px">
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+					do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+					enim ad minim veniam, quis nostrud exercitation ullamco laboris
+					nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+					reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+					pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+					culpa qui officia deserunt mollit anim id est laborum.</p>
+			</p:overlayPanel>
+		</div>
+
+	</div>
+
+	<div class="content">
+		<h:form
+			style="display: flex; flex-direction: row; flex: 1; height: 200%;">
+			<div class="card">
+				 <p:menu toggleable="true"  style="height: 200%;">
+            <p:menuitem value="Home"  outcome="darhsbord.xhtml"> </p:menuitem>
+            <p:menuitem value="Calendario"  outcome="Calendario.xhtml"> </p:menuitem>
+            <p:submenu label="Cursos">
+        <c:forEach var="g" items="#{usuario.grupos}">
+            <p:menuitem value="#{g.clave}" icon="pi pi-folder">
+                <!-- Agrega aquí los detalles específicos de cada grupo -->
+                <f:param name="grupoClave" value="#{g.clave}" />
+            </p:menuitem>
+        </c:forEach>
+    </p:submenu>
+           </p:menu>
+			</div>
+
+			<div id="content">
+				<p:commandButton value="Preparar Nueva Actividad"
+					actionListener="#{calendarBean.prepararNuevaActividad}"
+					update="activityDialog" oncomplete="PF('activityDialog').show()" />
+				<p:schedule value="#{calendarBean.eventModel}"
+					widgetVar="scheduleWidget" />
+
+
+
+			</div>
+			<p:dialog id="activityDialog" widgetVar="activityDialog" modal="true"
+				showEffect="fade" hideEffect="fade">
+				<!-- Agrega tus campos de formulario aquí -->
+				<h:form id="activityForm">
+					<h:panelGrid columns="2" cellpadding="5">
+						<h:outputLabel for="title" value="Título:" />
+						<p:inputText id="title" required="true" />
+
+						<h:outputLabel for="description" value="Descripción:" />
+						<p:inputTextarea id="description" rows="5" cols="30" />
+
+						<h:outputLabel for="dueDate" value="Fecha de Vencimiento:" />
+						<p:calendar id="dueDate" showOn="button"
+							pattern="MM/dd/yyyy HH:mm" />
+
+						<h:outputLabel for="groupKey" value="Clave del Grupo:" />
+						<p:inputText id="groupKey" />
+
+						<h:outputLabel for="assignmentPercentage"
+							value="Porcentaje de Asignación:" />
+						<p:inputText id="assignmentPercentage" />
+
+						<!-- Otros campos si es necesario -->
+
+						<p:commandButton value="Guardar"
+							actionListener="#{calendarBean.guardarNuevaActividad}"
+							update="activityForm" oncomplete="PF('activityDialog').hide()" />
+					</h:panelGrid>
+				</h:form>
+			</p:dialog>
+
+		</h:form>
+	</div>
+
+
+</h:body>
+
+</html>

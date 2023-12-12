@@ -1,0 +1,29 @@
+<!-- vistaGrupo.xhtml -->
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <f:metadata>
+        <f:viewParam name="grupoClave" value="#{vistaGrupo.grupoClave}" />
+        <f:event type="preRenderView" listener="#{vistaGrupo.init}" />
+    </f:metadata>
+    <h:head>
+        <title>Detalles del Grupo</title>
+       <meta name="viewport" content="width=device-width, initial-scale=10.0" />
+    </h:head>
+
+    <h:body>
+        <h:form>
+            <h:outputText value="Detalles del Grupo: #{vistaGrupo.grupoClave}" />
+
+            <!-- Agrega aquí más contenido según sea necesario -->
+
+        </h:form>
+    </h:body>
+
+</html>

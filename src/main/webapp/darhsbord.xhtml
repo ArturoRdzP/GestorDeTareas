@@ -1,10 +1,111 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-</body>
+<h:head>
+	<title>Dashboard</title>
+	<meta name="viewport" content="width=device-width, initial-scale=2" />
+	<h:outputStylesheet library="css" name="menu.css" />
+	<link rel="stylesheet" type="text/css" href="primeicons/primeicons.css" />
+	<link rel="stylesheet" type="text/css" href="path/to/styles.css" />
+</h:head>
+
+<h:body>
+	<div class="header">
+		<h1>Bienvenidos al sistema de tareas</h1>
+		<div class="header-icons">
+
+
+			<p:commandButton id="basic" type="button" icon="pi pi-user"
+				styleClass="no-background" />
+			<p:overlayPanel for="basic" style="width:350px">
+				<p>Nombre: #{vistaProfesores.nombreUsuario}</p>
+
+				<p>Correo: #{vistaProfesores.correo}</p>
+				<p>IDusuario:#{vistaProfesores.claveUsuari}</p>
+				<p:commandButton value="Cerrar Sesión"
+					action="#{usuario.cerrarSesion}" styleClass="boton" />
+
+			</p:overlayPanel>
+		</div>
+	</div>
+
+	<div class="content" style="">
+		<h:form
+			style="display: flex; flex-direction: row; flex: 1; height: 100%; width:80%">
+			<div class="card">
+				<p:menu toggleable="true" style="height: 200%;">
+					<p:menuitem value="Home" outcome="darhsbord.xhtml"></p:menuitem>
+					<p:menuitem value="Calendario" outcome="Calendario.xhtml"></p:menuitem>
+					<p:submenu label="Cursos">
+						<c:forEach var="grupo" items="#{vistaProfesores.lista}">
+							<p:menuitem value="#{grupo.claveGrupo}" icon="pi pi-folder"
+								outcome="grupo.xhtml">
+								<f:param name="grupoClave" value="#{grupo.claveGrupo}" />
+								<p>#{grupo.claveGrupo}</p>
+							</p:menuitem>
+						</c:forEach>
+					</p:submenu>
+
+				</p:menu>
+			</div>
+
+			<div id="content" style="width: 100vw; high: 100vw;">
+
+
+				<div class="card product">
+					<h:form id="form">
+						<p:dataView var="product" value="#{vistaProfesores.lista}"
+							rows="12" paginator="true" rowsPerPageTemplate="6,12,16"
+							paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} 
+                    {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+
+							<p:dataViewGridItem>
+								<div class="product-grid-item card border-1">
+									<div class="product-grid-item-top">
+										<div>
+											<i class="pi pi-tag product-category-icon" /> <span
+												class="product-category">#{product.claveGrupo}</span> <span
+												class="product-category">#{product.claveMateria}</span> <span
+												class="product-category">#{product.nombreMateria}</span>
+										</div>
+										<span
+											class="product-badge status-#{product.nombre().toLowerCase()}">#{product.nombreMateria}</span>
+									</div>
+									<div class="product-grid-item-content">
+										<p:graphicImage name="#{product.img}" library="demo"
+											fallback="imgs/usuario.png" />
+
+
+									</div>
+									<div class="product-grid-item-bottom"></div>
+								</div>
+							</p:dataViewGridItem>
+
+							<p:dataViewListItem>
+								<div class="product-list-item">
+									<p:graphicImage name="imgs/portada.jpeg" width="10%" />
+									<div class="product-list-detail">
+										<div class="product-name">#{product.claveMateria}</div>
+										<div class="product-name">#{product.nombreMateria}</div>
+										<div class="product-name">#{product.claveGrupo}</div>
+									</div>
+									<div class="product-list-action"></div>
+								</div>
+							</p:dataViewListItem>
+						</p:dataView>
+					</h:form>
+				</div>
+
+
+
+			</div>
+		</h:form>
+	</div>
+
+</h:body>
 </html>

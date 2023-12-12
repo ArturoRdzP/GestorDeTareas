@@ -3,6 +3,8 @@ package BaseDeDatos;
 import java.util.ArrayList;
 import java.util.List;
 
+import Logica.Grupo;
+import Logica.Profesor;
 import Logica.Usuario;
 
 public class ProxyBasedeDatos {
@@ -29,4 +31,5 @@ public class ProxyBasedeDatos {
 		}
 		return usuarioProxy;	
 	}
+	
 }
