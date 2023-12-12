@@ -17,7 +17,16 @@ public class Alumno extends Usuario {
 	}
 
 	public void enviarActividad(Actividad actividad) {
-
+		
 	}
+
+	public String getNo_control() {
+		return no_control;
+	}
+
+	public void setNo_control(String no_control) {
+		this.no_control = no_control;
+	}
+	
 
 }
